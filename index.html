@@ -26,8 +26,20 @@
         uniform vec2 resolution;
 
         const float PI = 3.14159265359;
+        const vec3 NAVY = vec3(17.0 / 255.0, 34.0 / 255.0 , 52.0 / 255.0);
+        const vec3 PURPLE = vec3(153.0 / 255.0, 73.0 / 255.0 , 255.0 / 255.0); //153 73 255
+        const vec3 DARK_BLUE = vec3(64.0 / 255.0, 64.0 / 255.0 , 199.0 / 255.0); //64 64 199
+        const vec3 LIGHT_BLUE = vec3(109.0 / 255.0, 241.0 / 255.0 , 241.0 / 255.0); //109,241,241
+        const vec3 GREEN = vec3(219.0 / 255.0, 154.0 / 255.0 , 70.0 / 255.0); //219	154	70
+        const vec3 BLUE = vec3(92.0 / 255.0, 117.0 / 255.0 , 214.0 / 255.0);
+        const vec3 ORANGE = vec3(209.5 / 255.0, 123.0 / 255.0, 76.5 / 255.0);
+        const vec3 RED = vec3(209.0 / 255.0, 109.0 / 255.0, 86.0 / 255.0); //209	109	86
+        const float PARTICLE_POS_HEIGHT = 0.5;
 
-        
+        float rand(float n) {
+            return fract(sin(n) * 43758.5453123);
+        }
+
 
     </script>
 </body>
