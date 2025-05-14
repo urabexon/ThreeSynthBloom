@@ -48,11 +48,17 @@ window.onload = () => {
 };
 
 function animate() {
-
+    requestAnimationFrame(animate);
+    render();
 }
 
 function render() {
+    var elapsedMilliseconds = Date.now() - startTime;
+    var elapsedSeconds = elapsedMilliseconds / 1000.;
+    uniforms.time.value = elapsedSeconds;
 
+    // draw
+    renderer.render(scene, camera);
 }
 
 window.onresize = () => {
