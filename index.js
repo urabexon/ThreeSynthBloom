@@ -27,11 +27,14 @@ window.onload = () => {
     camera = new THREE.PerspectiveCamera(75, windowWidth / windowHeight, 0.1, 1000);
     camera.position.z = 100;
 
+    // Geometry作成
+    let geometry = new THREE.PlaneBufferGeometry(windowWidth, windowHeight);
+
     // Material作成
     let material = new THREE.ShaderMaterial({
-    vertexShader: document.getElementById('vertexShader').textContent,
-    fragmentShader: document.getElementById('fragmentShader').textContent,
-    uniforms: uniforms
+        vertexShader: document.getElementById('vertexShader').textContent,
+        fragmentShader: document.getElementById('fragmentShader').textContent,
+        uniforms: uniforms
     });
 
     // Mesh作成
