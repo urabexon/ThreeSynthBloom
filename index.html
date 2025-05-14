@@ -97,9 +97,73 @@
 
             vec3 color = NAVY;
 
+            //base background (purple)
+            float y_offset = 0.6;
+            float phase = 3.05; //位相ずらし
+            float t = time * 0.1;
+            float strength = 0.5; //sin波のなめらかさ
+            float i = floor(st.x + t + phase);  // integer
+            float f = fract(st.x + t + phase);  // fraction
+            float y = y_offset + mix(rand(i), rand(i + 1.0), smoothstep(0.,1.,f)) * strength;
+            color += smoothstep(st.y, st.y + 0.3, y) * PURPLE;
+            vec3 subtract_color = color;
+
+            //sub background (dark blue)
+            y_offset = 0.3;
+            phase = 1.0;
+            i = floor(st.x + t + phase);
+            f = fract(st.x + t + phase);
+            y = y_offset + mix(rand(i), rand(i + 1.0), smoothstep(0.,1.,f)) * strength;
+            color += smoothstep(st.y, st.y + 0.2, y) * (DARK_BLUE - subtract_color);
+            subtract_color = color;
+
+            vec2 pos = vec2(st*1.2);
+            vec2 pos2 = vec2(st*1.0);
+            vec2 pos4 = vec2(st*1.5);
+        
+            float DF = 0.0;
+            float DF2 = 0.0;
+            float DF4 = 0.0;
+
+            // Add a random position
+            float a = 0.0;
+            vec2 vel = vec2(time*.25, time*.25);
+
+            DF += snoise(pos-vel)*.25 + 0.3;
+            DF2 += snoise(pos2-vel)*.25+.25;
+            DF4 += snoise(pos4+vel)*.25+.2;
+
+            float val1 = DF;
+            float val2 = DF2;
+            float val4 = DF4;
+
+            // Add a random position
+            a = snoise(pos * vec2(cos(time*0.2), sin(time*0.2))* 0.01) * PI;
+            vel = vec2(cos(a),sin(a))*0.5;
+            val1 += snoise(pos+vel)*0.5+0.2;
+            val1 *= smoothstep(PARTICLE_POS_HEIGHT, PARTICLE_POS_HEIGHT + 0.2, 1.0-st.y);
+
+            // Add a random position
+            a = snoise(pos2 * vec2(cos(time*0.2), cos(time*0.2)) * 0.1) * PI;
+            vel = vec2(sin(a),cos(a))*0.5;
+            val2 += snoise(pos2+vel)*0.25+0.1;
+            val2 *= smoothstep(PARTICLE_POS_HEIGHT, PARTICLE_POS_HEIGHT + 0.3, 1.0-st.y);
+
+            // Add a random position
+            pos4.x -= 1.0;
+            a = snoise(pos4 * vec2(sin(time*0.15), cos(time*0.1))* 0.01) * PI;
+            vel = vec2(cos(a),sin(a))*0.5;
+            val4 += snoise(pos4+vel)*0.25+0.15;
+            val4 *= smoothstep(PARTICLE_POS_HEIGHT - 0.1, PARTICLE_POS_HEIGHT + 0.3, 1.0-st.y);
+
+            color += vec3(smoothstep(.3, .55, val2)) * (RED - subtract_color);
+            subtract_color = color;
+            color += vec3(smoothstep(.3, .95, val1)) * (BLUE - subtract_color);
+            subtract_color = color;
+            color += vec3(smoothstep(.3, .75, val4)) * (ORANGE - subtract_color) * vec3(0.2);
+
             gl_FragColor = vec4(color, 1.0);
         }
-
     </script>
 </body>
 </html>
