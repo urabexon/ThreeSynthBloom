@@ -40,6 +40,14 @@
             return fract(sin(n) * 43758.5453123);
         }
 
+        void main() {
+            vec2 st = gl_FragCoord.xy/resolution.xy;
+            st.x *= resolution.x/resolution.y;
+
+            vec3 color = NAVY;
+
+            gl_FragColor = vec4(color, 1.0);
+        }
 
     </script>
 </body>
